@@ -1,0 +1,17 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+<div class="container">
+    <h1>Add a new movie to the site</h1>
+    <form class="site-form" action="{% url 'movies:create' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form">
+            {{ form }}
+        </div>
+        <div class="form">
+            <input class="button" type="submit" value="Create">
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

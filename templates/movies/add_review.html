@@ -1,0 +1,46 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+<div class="container">
+
+    <h1>Tell others what you think about "{{movie}}"</h1>
+    <div class="form">
+        <form class="site-form" action="{% url 'movies:addreview' slug=slug %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="title">In one line:</label><br>
+            <input type="text" id="title" name="review_title" style="width: 500px;">
+            <br>
+            <br>
+
+            <p>Your rating (out of 5):</p>
+            <div class="rate">
+                <input type="radio" id="star5" name="review_rating" value="5" />
+                <label for="star5" title="text">5 stars</label>
+
+                <input type="radio" id="star4" name="review_rating" value="4" />
+                <label for="star4" title="text">4 stars</label>
+
+                <input type="radio" id="star3" name="review_rating" value="3" />
+                <label for="star3" title="text">3 stars</label>
+
+                <input type="radio" id="star2" name="review_rating" value="2" />
+                <label for="star2" title="text">2 stars</label>
+
+                <input type="radio" id="star1" name="review_rating" value="1" />
+                <label for="star1" title="text">1 star</label>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div>
+                <label for="text">Add a short description:</label><br>
+                <textarea  id="text" name="review_text" cols="40" rows="5"></textarea>
+            </div>
+
+            <div class="form-group">
+                <input class="button" type="submit" value="Create">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

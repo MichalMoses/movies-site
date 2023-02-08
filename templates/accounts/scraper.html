@@ -1,0 +1,10 @@
+{% extends 'base_layout.html' %}
+{% block content%}
+<div>
+  <h1>Are you sure you want to start the scraper? this will affect data already existing in DB</h1>
+  <form action="{% url 'scraper' %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Yes I'm sure down deep inside</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base_layout.html' %}
+{% block content%}
+<div class="container">
+
+    <h1>Sign up to I<span style="color:red; font-size: 35px;">&#9829;</span>MOVIES</h1>
+        <div class="form">
+            <form class="site-form" action="{% url 'accounts:signup' %}" method="post">
+                {% csrf_token %}
+                {{form}}
+                <input class="button" type="submit" value="Signup">
+            </form>
+        </div>
+</div>
+{% endblock %}

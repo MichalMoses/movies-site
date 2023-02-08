@@ -1,0 +1,14 @@
+{% extends 'base_layout.html' %}
+{% load static%}
+{% block content %}
+
+<h1>ACTORS</h1>
+<div class="container">
+    {% for actor in actors %}
+    <div class="data_card">
+        <a href="{% url 'actors:details' slug=actor.slug %}"><img class="image_preview" src="{{ actor.actor_image.url }}" title="{{ actor.actor_name }}"></a><br>
+        <h2>{{ actor.actor_name }}</h2>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

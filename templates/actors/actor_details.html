@@ -1,0 +1,29 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+<div class = "container">
+    <img class="portrait" src="{{ actor.actor_image.url }}" title="{{ actor.actor_name }}">
+    <div class="stats">
+        <h1>{{actor.actor_name}}</h1>
+        <div class="fact"><b>Gender:</b><br>{{ actor.actor_gender }}</div>
+        <div class="fact"><b>Birthday:</b><br>{{ actor.actor_birthday }}</div>
+        <div class="fact"><b>Place of birth:</b><br>{{ actor.actor_place_of_birth }}</div>
+    </div>
+</div>
+
+
+
+<div class = "container">
+    <h1>FILMORGRAPHY</h1>
+    <div class="scroller">
+    {% for appearance in appearances %}
+        <div class="data_card">
+            <a href="{% url 'movies:details' slug=appearance.slug %}"> <img class="image_preview" src="{{ appearance.poster.url }}" title="{{ appearance.movie }}"></a>
+            {{ appearance.movie }} <br>as {{ appearance.role }} <br>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+  <img class='poster' src="{{ movie.poster.url }}" title="{{ movie.name }}">
+  <div class="stats">
+    <h1>{{movie.name}}</h1>
+    <div class = "description">{{movie.overview}}</div>
+    <div class ="fact"><b>Director:</b><br>{{movie.director}}</div>
+    <div class="fact"><b>Release date:</b><br>{{movie.release}}</div>
+    <div class="fact"><b>Duration:</b><br>{{movie.runtime}}</div>
+    <div class="fact"><b>Genre:</b><br>{{movie.genre}}</div>
+    <div style="margin: 5px;"><b>Rating:</b> {{movie.rating_avg}} out of 5 (total {{movie.rating_num}} ratings)</div>
+  </div>
+</div>
+
+<div class="container">
+  <h1>CAST</h1>
+  <div class="scroller">
+    {% for actor in cast_list %}
+    <div class="data_card">
+      <a href="{% url 'actors:details' slug=actor.slug %}"><img class="image_preview" src="{{ actor.image }}" title="{{ actor.name }}"></a><br>
+      {{ actor.name }}<br>
+      as <span class="role">'{{ actor.role }}'</span><br>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+<div class="container" id="reviews">
+  <h1>REVIEWS</h1>
+  {% if not reviews_list%}
+  <h2><a href="{% url 'movies:addreview' slug=movie.slug %}">Be the first one to write a review</a> (Logged in users only)</h2>
+  {% else %}
+  <h2><a href="{% url 'movies:addreview' slug=movie.slug %}">Write a review</a> (Logged in users only)</h2>
+  {% endif %}
+  <div class="scroller">
+    {% for item in reviews_list %}
+    <div class="review_card" id="{{ item.review.id }}">
+      {% for star in item.range_ostar %}
+      <span class="ostar">&#9733;</span>
+      {% endfor %}
+      {% for star in item.range_dstar %}
+      <span class="dstar">&#9733;</span>
+      {% endfor %}
+      <br>
+      <h2>{{item.review.review_title}}</h2>
+
+      <p style="font-size: small;">Written by {{item.review.review_author}} on {{item.review.review_date}}</p>
+      <p style="font-size: large;">{{item.review.review_text}}</p>
+
+<div class="like_dislike">
+      <form action="{% url 'movies:details' slug=movie.slug %}" method="post">
+        {% csrf_token %}
+          <input type="hidden" value=True name="review_like">
+          <input type="hidden" value="{{item.review.id}}" name="review_id" >
+          <p>{{item.review.review_likes}}</p>
+          <button  class="image_button" type="submit"><img class="like_dislike" src="{% static 'like.png' %}"></button>
+      </form>
+</div>
+<div class="like_dislike">
+      <form action="{% url 'movies:details' slug=movie.slug %}" method="post">
+        {% csrf_token %}
+          <input type="hidden" value=True name="review_dislike">
+          <input type="hidden" value="{{item.review.id}}" name="review_id" >
+        <p>{{item.review.review_dislikes}}</p>
+          <button class="image_button" type="submit"><img src="{% static 'dislike.png' %}"></button>
+      </form>
+</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<p>movie uploaded by: {{movie.author}}</p>
+
+{% endblock %}

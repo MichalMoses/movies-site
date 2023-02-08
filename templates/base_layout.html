@@ -1,0 +1,52 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="icon" type="image/x=icon" href="{% static 'heart.ico' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'star_styles.css' %}">
+</head>
+
+<body>
+<header>
+    <div class="banner">
+        <a href="/movies"><img class="banner" src="{% static 'movies_banner.jpg' %}"></a>
+    </div>
+    <div class="accounts">
+        {% if user.is_authenticated %}
+        <h1>Welcome {{user}} </h1>
+        {% if user.is_superuser %}
+        <a href="{% url 'movies:create' %}"><div class="button">Add new movie</div></a>
+        {% endif %}
+        <a href="{% url 'accounts:logout' %}"><div class="button">Log out</div></a>
+        <a href="{% url 'accounts:login' %}"><div class="button">Change user</div></a>
+
+        {% else %}
+        <h1>Welcome guest </h1>
+        <a href="{% url 'accounts:login' %}"><div class="button">Log in</div></a>
+        <a href="{% url 'accounts:signup' %}"><div class="button">Sign up</div></a>
+        {% endif %}
+    </div>
+</header>
+
+
+<main>
+
+    <div class="wrapper">
+        {% block content %}
+        {% endblock %}
+    </div>
+</main>
+
+
+<footer>
+    <a href="http://www.linkedin.com/in/michal-kalish-moses" title="My linkedin page"><img src="{% static 'linkedin.png' %}"></a>
+    <a href="{% url 'about' %}"><h1 style="display: inline-block; margin-left:20px;">About</h1></a>
+
+</footer>
+
+</body>
+</html>

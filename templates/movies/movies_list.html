@@ -1,0 +1,41 @@
+{% extends 'base_layout.html' %}
+{% block content %}
+
+<div class="filter_bar">
+    <div class="form">
+        <form action="{% url 'movies:list' %}" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <input class="button" type="submit" value="Filter">
+        </form>
+    </div>
+    <a href="{% url 'movies:list' %}"><div class="button">Clear filters</div></a>
+    <a href="{% url 'actors:list' %}"><div class="button">View all actors</div></a>
+
+    {% if filter.filtered %}
+    <h2>Showing filtered results - {{ movie_count }} items</h2>
+    {% elif filter.none %}
+    <h2>Showing all movies, rating high to low - {{movie_count}} items </h2>
+    {% elif filter.empty %}
+    <h2>Sorry, there are no movies matching your filters</h2>
+    {% endif %}
+</div>
+
+<div class="movies">
+    {% for movie in movies %}
+    <a href="{% url 'movies:details' slug=movie.slug %}">
+        <div class="movie_preview">
+            <img class="image" src="{{ movie.poster.url }}" title="{{ movie.name }}">
+            <div class="movie_description">
+                <h2>{{ movie.name }}</h2>
+                <h3>Genres: {{ movie.genre }}</h3>
+                <p>{{ movie.overview|truncatechars:300 }}</p><br>
+                <p><b>Rating:</b> {{ movie.rating_avg }} </p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
